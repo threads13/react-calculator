@@ -9,7 +9,7 @@ class App extends Component {
   constructor(props){
     super(props);
     this.state = {
-      displayValue: '0',
+      displayValue: 0,
       operator: '',
       operatorIsSet: false,
       storedValue: '',
@@ -39,24 +39,28 @@ class App extends Component {
       displayValue: '0',
       operator: operator,
       operatorIsSet: true,
-      storedValue: displayValue
+      storedValue: displayValue,
+      isDecimal: false
     });
   }
 
   calculate(){
     const {displayValue, operator, storedValue } = this.state;
+    const nextValue = parseFloat(displayValue);
 
     const operations = {
-      '/': (storedValue, displayValue) => storedValue / displayValue,
-      '*': (storedValue, displayValue) => storedValue * displayValue,
-      '+': (storedValue, displayValue) => storedValue + displayValue,
-      '-': (storedValue, displayValue) => storedValue - displayValue
+      '/': (storedValue, displayValue) => storedValue / nextValue,
+      '*': (storedValue, displayValue) => storedValue * nextValue,
+      '+': (storedValue, displayValue) => storedValue + nextValue,
+      '-': (storedValue, displayValue) => storedValue - nextValue
     }
     if(operator){
-      const calculatedValue = operations[operator](storedValue, displayValue);
+      const calculatedValue = operations[operator](storedValue, nextValue);
 
       this.setState({
         displayValue: calculatedValue,
+        operator: '',
+        operatorIsSet: false,
         isDecimal: calculatedValue  % 1 === 0 ? false : true
       });
     }
@@ -69,7 +73,6 @@ class App extends Component {
   }
 
   changeDecimal(dot){
-    // pull off state then do this
     const { displayValue, isDecimal } = this.state;
 
       if(!isDecimal){
@@ -116,6 +119,7 @@ class App extends Component {
           <button className="calc-key" onClick={() => {this.inputDigit(0)}}>0</button>
           <button className="calc-key" onClick={() => {this.calculate()}} >=</button>
           <button className="calc-key" onClick={() => {this.inputOperator('-')}}style={calcStyle}>-</button>
+          <button className="calc-key" onClick={() => {this.inputOperator('+')}}style={calcStyle}>+</button>
         </div>
       </div>
     );
