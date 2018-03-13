@@ -9,20 +9,33 @@ class App extends Component {
   constructor(props){
     super(props);
     this.state = {
-      displayValue: 0,
+      displayValue: '0',
       operator: '',
       operatorIsSet: false,
-      storedValue: '',
-      isDecimal: false
+      storedValue: '0',
+      isDecimal: false,
+      justCalculated: false
     };
   }
 
   inputDigit(digit){
-    const { displayValue, operator, operatorIsSet, storedValue, isDecimal } = this.state;
+    const { displayValue, operator, operatorIsSet, storedValue, isDecimal, justCalculated } = this.state;
 
-    if (operatorIsSet){
+    // can do an if statement to see if calculated, then if so can
+    // put only the most recent digit (last character in the string)
+    // if(justCalculated){
+    //   const individualDigit = displayValue.split('');
+    //   const lastDigit = individualDigit.slice(-1);
+    //   console.log(lastDigit);
+    // }
+
+    if(justCalculated){
       this.setState({
-        displayValue: displayValue === '0' ? String(digit) : displayValue + digit,
+        displayValue: digit
+      });
+    } else if(operatorIsSet){
+      this.setState({
+        displayValue: digit,
         operatorIsSet: false
       });
     } else {
@@ -31,6 +44,10 @@ class App extends Component {
       });
     }
   }
+
+
+
+  // maybe just turn a div to a span to get rid of border?
 
   inputOperator(operator){
     const {displayValue} = this.state;
@@ -46,22 +63,25 @@ class App extends Component {
 
   calculate(){
     const {displayValue, operator, storedValue } = this.state;
-    const nextValue = parseFloat(displayValue);
+    const displayValueFloat = parseFloat(displayValue);
+    const storedValueFloat= parseFloat(storedValue);
 
     const operations = {
-      '/': (storedValue, displayValue) => storedValue / nextValue,
-      '*': (storedValue, displayValue) => storedValue * nextValue,
-      '+': (storedValue, displayValue) => storedValue + nextValue,
-      '-': (storedValue, displayValue) => storedValue - nextValue
+      '/': (storedValueFloat, displayValueFloat) => storedValueFloat / displayValueFloat,
+      '*': (storedValueFloat, displayValueFloat) => storedValueFloat * displayValueFloat,
+      '+': (storedValueFloat, displayValueFloat) => storedValueFloat + displayValueFloat,
+      '-': (storedValueFloat, displayValueFloat) => storedValueFloat - displayValueFloat
     }
     if(operator){
-      const calculatedValue = operations[operator](storedValue, nextValue);
+      const calculatedValue = operations[operator](storedValueFloat, displayValueFloat);
 
       this.setState({
-        displayValue: calculatedValue,
+        displayValue: String(calculatedValue),
         operator: '',
         operatorIsSet: false,
-        isDecimal: calculatedValue  % 1 === 0 ? false : true
+        isDecimal: calculatedValue  % 1 === 0 ? false : true,
+        justCalculated: true,
+        storedValue:  String(calculatedValue)
       });
     }
   }
@@ -88,38 +108,50 @@ class App extends Component {
       <button>{t}</button>
     ));
 
-    const calcStyle = {background: '#999999'};
-
     return (
       <div className="App">
         <pre>{JSON.stringify(this.state, null, 2)}</pre>
+
         <div className="display">
           {this.state.displayValue}
         </div>
-        <div className="key-row">
-          <button className="calc-key" onClick={() => {this.inputDigit(7)}}>7</button>
-          <button className="calc-key" onClick={() => {this.inputDigit(8)}}>8</button>
-          <button className="calc-key" onClick={() => {this.inputDigit(9)}}>9</button>
-          <button className="calc-key" onClick={() => {this.clearOperator()}} style={calcStyle}>CE</button>
-        </div>
-        <div className="key-row">
-          <button className="calc-key" onClick={() => {this.inputDigit(4)}}>4</button>
-          <button className="calc-key" onClick={() => {this.inputDigit(5)}}>5</button>
-          <button className="calc-key" onClick={() => {this.inputDigit(6)}}>6</button>
-          <button className="calc-key" onClick={() => {this.inputOperator('/')}} style={calcStyle}>/</button>
-        </div>
-        <div className="key-row">
-          <button className="calc-key" onClick={() => {this.inputDigit(1)}}>1</button>
-          <button className="calc-key" onClick={() => {this.inputDigit(2)}}>2</button>
-          <button className="calc-key" onClick={() => {this.inputDigit(3)}}>3</button>
-          <button className="calc-key" onClick={() => {this.inputOperator('*')}} style={calcStyle}>X</button>
-        </div>
-        <div className="key-row">
-          <button className="calc-key" onClick={() => {this.changeDecimal('.')}}>.</button>
-          <button className="calc-key" onClick={() => {this.inputDigit(0)}}>0</button>
-          <button className="calc-key" onClick={() => {this.calculate()}} >=</button>
-          <button className="calc-key" onClick={() => {this.inputOperator('-')}}style={calcStyle}>-</button>
-          <button className="calc-key" onClick={() => {this.inputOperator('+')}}style={calcStyle}>+</button>
+
+        <div className="key-pad">
+          <div className="number-keys" style={{border: '0'}}>
+
+            <div className="key-row" style={{height: '75px'}}>
+              <button className="calc-key" onClick={() => {this.inputDigit(7)}}>7</button>
+              <button className="calc-key" onClick={() => {this.inputDigit(8)}}>8</button>
+              <button className="calc-key" onClick={() => {this.inputDigit(9)}}>9</button>
+            </div>
+
+            <div className="key-row" style={{height: '75px'}}>
+              <button className="calc-key" onClick={() => {this.inputDigit(4)}}>4</button>
+              <button className="calc-key" onClick={() => {this.inputDigit(5)}}>5</button>
+              <button className="calc-key" onClick={() => {this.inputDigit(6)}}>6</button>
+            </div>
+
+            <div className="key-row" style={{height: '75px'}}>
+              <button className="calc-key" onClick={() => {this.inputDigit(1)}}>1</button>
+              <button className="calc-key" onClick={() => {this.inputDigit(2)}}>2</button>
+              <button className="calc-key" onClick={() => {this.inputDigit(3)}}>3</button>
+            </div>
+
+            <div className="key-row" style={{height: '75px'}}>
+              <button className="calc-key" onClick={() => {this.changeDecimal('.')}}>.</button>
+              <button className="calc-key" onClick={() => {this.inputDigit(0)}}>0</button>
+              <button className="calc-key" onClick={() => {this.calculate()}} >=</button>
+            </div>
+          </div>
+
+          <div className="right-key-items" style={{border: 'none'}}>
+            <button className="calc-key" style={{background: '#999999'}} onClick={() => {this.clearOperator()}}>CE</button>
+            <button className="calc-key" style={{background: '#999999'}} onClick={() => {this.inputOperator('/')}}>/</button>
+            <button className="calc-key" style={{background: '#999999'}} onClick={() => {this.inputOperator('*')}}>X</button>
+            <button className="calc-key" style={{background: '#999999'}} onClick={() => {this.inputOperator('-')}}>-</button>
+            <button className="calc-key" style={{background: '#999999'}} onClick={() => {this.inputOperator('+')}}>+</button>
+          </div>
+
         </div>
       </div>
     );

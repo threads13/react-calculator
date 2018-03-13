@@ -1,38 +1,75 @@
 .App {
-  display: flex;
-  flex-direction: column;
+
   margin: 0 auto;
   margin-top: 60px;
   max-width: 50%;
-
+  height: 1000px;
 }
 
 .key-row{
   display: flex;
+  flex-direction: row;
+}
+
+.number-keys{
+  display: flex;
+  flex-direction: column;
+  flex-basis: 75%;
+  /* height: 700px; */
+}
+
+
+
+.display {
+  font-size: 35px;
+  display: flex;
+  justify-content: flex-end;
+  padding-bottom: 1em;
+  border: 1px solid #454545;
+  border-bottom: 0;
+}
+
+.key-right{
+
+}
+
+.right-key-items{
+  display: flex;
+  flex-direction: column;
+  flex-basis: 25%;
+
+  height: 300px;
 }
 
 .calc-key {
-  padding-top: 15px;
-  padding-bottom: 15px;
-  padding-left: 0px;
-  padding-right: 0px;
-  flex-basis: 25%;
-  align-items: center;
+  display: flex;
+  flex-basis: 33%;
+  flex-wrap: wrap;
+  justify-content: center;
   background-color: #454545;
   color: white;
   border: none;
+  outline: none;
+  border-color: #454545;
 }
 
-button:hover {
-  background: #8CD5ED;
-}
-
-button:active {
-  border: none;
-}
-
-.display {
-  font-size: 45px;
+.key-pad {
   display: flex;
-  justify-content: flex-end;
+
+}
+
+/* button {
+  padding-top: 45px;
+  padding-bottom: 45px;
+  padding-left: 25px;
+  padding-right: 25px;
+} */
+
+
+button:focus {
+  outline: none;
+}
+
+button:active{
+  background: #4D4949;
 }
