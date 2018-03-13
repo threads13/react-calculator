@@ -27,17 +27,14 @@
   padding-bottom: 1em;
   border: 1px solid #454545;
   border-bottom: 0;
-}
-
-.key-right{
-
+  padding-top: 5px;
+  padding-right: 5px
 }
 
 .right-key-items{
   display: flex;
   flex-direction: column;
   flex-basis: 25%;
-
   height: 300px;
 }
 
@@ -58,18 +55,13 @@
 
 }
 
-/* button {
-  padding-top: 45px;
-  padding-bottom: 45px;
-  padding-left: 25px;
-  padding-right: 25px;
-} */
-
-
 button:focus {
   outline: none;
 }
 
 button:active{
   background: #4D4949;
+}
+
+button {
 }
