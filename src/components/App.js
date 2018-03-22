@@ -62,8 +62,20 @@ class App extends Component {
     if(operator){
       const calculatedValue = operations[operator](storedValueFloat, displayValueFloat);
 
+      // if (String(calculatedValue).length > 5){
+      //   let calculatedValueString = calculatedValue.slice(0, 4);
+      // }
+
+      console.log(calculatedValue);
+
+      const calcValueString = String(calculatedValue);
+      console.log(typeof calcValueString);
+      const smallCalcValue = calcValueString.slice(0, 10);
+      console.log(smallCalcValue);
+
+
       this.setState({
-        displayValue: String(calculatedValue),
+        displayValue: smallCalcValue,
         operator: '',
         operatorIsSet: false,
         isDecimal: calculatedValue  % 1 === 0 ? false : true,
@@ -97,7 +109,7 @@ class App extends Component {
 
     return (
       <div className="App">
-        <prev>{JSON.stringify(this.state, null, 2)}</prev>
+        {/* <prev>{JSON.stringify(this.state, null, 2)}</prev> */}
         <div className="display">
           {this.state.displayValue}
         </div>
