@@ -9,26 +9,38 @@
 .key-row{
   display: flex;
   flex-direction: row;
+  border-width: 0px;
+  border: none;
+  box-shadow: none;
+  -webkit-appearance: none;
+  margin-right: 0;
 }
 
 .number-keys{
   display: flex;
   flex-direction: column;
   flex-basis: 75%;
+  border-width: 0px;
+  border: none;
+  box-shadow: none;
+  -webkit-appearance: none;
+  margin-right: 0;
   /* height: 700px; */
 }
 
 
 
 .display {
-  font-size: 35px;
+  font-size: 45px;
   display: flex;
   justify-content: flex-end;
   padding-bottom: 1em;
   border: 1px solid #454545;
   border-bottom: 0;
   padding-top: 5px;
-  padding-right: 5px
+  padding-right: 5px;
+  max-width: 249px;
+  max-height: 300px;
 }
 
 .right-key-items{
@@ -36,6 +48,11 @@
   flex-direction: column;
   flex-basis: 25%;
   height: 300px;
+  border-width: 0px;
+  border-width: 0px;
+  border: none;
+  box-shadow: none;
+  -webkit-appearance: none
 }
 
 .calc-key {
@@ -45,13 +62,25 @@
   justify-content: center;
   background-color: #454545;
   color: white;
+  border-width: 0px;
   border: none;
   outline: none;
   border-color: #454545;
+  box-shadow: none;
+  -webkit-appearance: none;
+  font-size: 20px;
 }
 
 .key-pad {
   display: flex;
+  border-width: 0px;
+  border-width: 0px;
+  border: none;
+  box-shadow: none;
+  -webkit-appearance: none;
+  margin-left: 0;
+  max-width: 256px;
+  max-height: 300px
 
 }
 

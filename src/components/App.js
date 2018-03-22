@@ -21,7 +21,8 @@ class App extends Component {
 
     if(justCalculated){
       this.setState({
-        displayValue: digit
+        displayValue: String(digit),
+        justCalculated: false
       });
     } else if(operatorIsSet){
       this.setState({
@@ -30,7 +31,7 @@ class App extends Component {
       });
     } else {
       this.setState ({
-        displayValue: displayValue === '0' ? String(digit) : displayValue + digit
+        displayValue: displayValue === '0' ? String(digit) : String(displayValue) + String(digit)
       });
     }
   }
@@ -96,6 +97,7 @@ class App extends Component {
 
     return (
       <div className="App">
+        <prev>{JSON.stringify(this.state, null, 2)}</prev>
         <div className="display">
           {this.state.displayValue}
         </div>
