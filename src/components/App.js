@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
-import NumberKey from './number_key';
-import numbers from './numbers';
+
 import './App.css';
 
 class App extends Component {
@@ -17,7 +16,7 @@ class App extends Component {
   }
 
   inputDigit(digit){
-    const { displayValue, operator, operatorIsSet, storedValue, isDecimal, justCalculated } = this.state;
+    const { displayValue, operatorIsSet, justCalculated } = this.state;
 
     if(justCalculated){
       this.setState({
@@ -61,18 +60,8 @@ class App extends Component {
     }
     if(operator){
       const calculatedValue = operations[operator](storedValueFloat, displayValueFloat);
-
-      // if (String(calculatedValue).length > 5){
-      //   let calculatedValueString = calculatedValue.slice(0, 4);
-      // }
-
-      console.log(calculatedValue);
-
       const calcValueString = String(calculatedValue);
-      console.log(typeof calcValueString);
       const smallCalcValue = calcValueString.slice(0, 10);
-      console.log(smallCalcValue);
-
 
       this.setState({
         displayValue: smallCalcValue,
@@ -103,10 +92,6 @@ class App extends Component {
   }
 
   render() {
-    const nums = numbers.map((t) => (
-      <button>{t}</button>
-    ));
-
     return (
       <div className="App">
         <div className="display">
